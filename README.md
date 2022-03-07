@@ -1,2 +1,5 @@
-# GoSummary
-do some go code summary
+
+# 两个标准库的包
+- strings
+- bytes 
+
