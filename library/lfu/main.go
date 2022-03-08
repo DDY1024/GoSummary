@@ -11,6 +11,18 @@ package lfu
 // 关于 runtime.SetFinalizer 在 cache 中的应用可以参考: https://zhuanlan.zhihu.com/p/76504936
 //
 //
+// LFU 热 key 防御使用建议
+// 1. 对于 cache size 设置为 1000 即可有效的拦截热度为 1% 的热 key
+// 2. 为了保证 cache 对热 key 感知的灵敏度，"清理周期"不宜设置的过长，1s就足够了
+// 3. key 的过期时间会直接影响数据的准确性（需要结合具体服务设定合适的值）
+// 4. 如果想只拦截热度达到某个阈值的热 key，可以在 Get 操作中设置 key 阈值，降低数据不一致对服务的影响
+//
+// 实验结论证明: lfu 较 lru 在热 key 命中率上更优
+//
+//
+// 进一步优化：
+// lfu 实现中对于 kv、freq_list 操作会进行加锁，为了降低锁的粒度，同时创建多个 lfu cache，进行 hash 取余选取
+// 大锁拆小锁的方式
 
 import (
 	"container/list"
@@ -252,7 +264,7 @@ func (j *janitor) Run(c *cache) {
 		select {
 		case <-ticker.C:
 			c.Purge()
-		case <-j.stop:
+		case <-j.stop: // 停止
 			ticker.Stop()
 			return
 		}
@@ -272,11 +284,13 @@ func runJanitor(c *cache, ci time.Duration) {
 	go j.Run(c)
 }
 
+// ci: lfu local cache 清除过期 key 的周期
 func New(maxLen int, ci time.Duration, name string) *Cache {
 	c := newCache(maxLen, ci, name)
 	C := &Cache{c}
 	if ci > 0 {
 		runJanitor(c, ci)
+		// 在 cache 对象没有再被引用时，停止后台定时清理的 goroutine
 		runtime.SetFinalizer(C, stopJanitor)
 	}
 	return C
