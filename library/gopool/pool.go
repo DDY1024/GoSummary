@@ -6,8 +6,6 @@ import (
 	"sync/atomic"
 )
 
-// 该实现中 task 和 worker 均进行了池化，尽可能减少相关对象的创建操作
-// 接口实现
 type Pool interface {
 	// Name returns the corresponding pool name.
 	Name() string
@@ -85,7 +83,7 @@ type pool struct {
 func NewPool(name string, cap int32, config *Config) Pool {
 	p := &pool{
 		name:   name,
-		cap:    cap, // 容量
+		cap:    cap,
 		config: config,
 	}
 	return p

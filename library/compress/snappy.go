@@ -61,7 +61,7 @@ func (s *snappyCodec) Encode(data []byte) ([]byte, error) {
 	}
 
 	// Tips: 此处预估下内存占用大小，暂且用 0xff 代替
-	buf := bytes.NewBuffer(make([]byte, 0, totalBytesSize))
+	buf := bytes.NewBuffer(make([]byte, 0, 0xff))
 	writer := s.getWriter(buf)
 	defer s.putWriter(writer)
 	if _, err := writer.Write(data); err != nil {
