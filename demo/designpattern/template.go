@@ -31,24 +31,22 @@ func (s *sms) Send(content string, phone int) error {
 }
 
 type TelecomSms struct {
-	*sms
 }
 
 func NewTelecomSms() *TelecomSms {
 	tel := &TelecomSms{}
-	tel.sms = &sms{ISMS: tel}
 	return tel
 }
 
 func (tel *TelecomSms) send(content string, phone int) error {
-	fmt.Println("send by telecom success")
+	fmt.Println("send by telecom success", content, phone)
 	return nil
 }
 
-//
-// ^uint(0)
-// int(^uint(0)>>1)
-// ^uint(0)
-// int(^uint(0)>>1)
-// 常量自动补全机制：比较骚
-//
+func main() {
+	tsms := NewTelecomSms()
+	sms := &sms{
+		ISMS: tsms,
+	}
+	sms.Send("wxy", 10086)
+}

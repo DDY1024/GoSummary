@@ -1,7 +1,5 @@
 package main
 
-// 参考各类 iterator 实现
-
 type Iterator interface {
 	HasNext() bool
 	Next()

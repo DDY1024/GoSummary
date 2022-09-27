@@ -27,10 +27,8 @@ var (
 )
 
 func GetLazySingleton() *Singleton {
-	if lazySingleton == nil {
-		once.Do(func() {
-			lazySingleton = &Singleton{}
-		})
-	}
+	once.Do(func() {
+		lazySingleton = &Singleton{}
+	})
 	return lazySingleton
 }

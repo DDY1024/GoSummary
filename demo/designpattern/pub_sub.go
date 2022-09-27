@@ -4,7 +4,9 @@ import (
 	"fmt"
 )
 
-// 观察者模式: 广播、多播通知机制、pub-sub 模型
+// 观察者模式: 广播、多播机制
+// 发布-订阅机制
+// https://mp.weixin.qq.com/s/4NqjkXVqFPamEc_QsyRipA
 
 type ISubject interface {
 	Register(observer IObsever) // 注册添加一个观察者
