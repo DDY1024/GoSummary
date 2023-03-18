@@ -30,7 +30,7 @@ func (yp yamlParser) Parse(data []byte) {
 func NewParser(option string) Parser {
 	switch option {
 	case "json":
-		return jsonParser{}
+		return jsonParser{} // 创建相应 parser 类型的方法，下沉到子类去实现，相当于子类提供 New 或 Create 方法
 	case "yaml":
 		return yamlParser{}
 	}
@@ -57,7 +57,8 @@ func (ypc yamlParserCreator) Create() Parser {
 }
 
 // 3. 抽象工厂
-type AbstractFactory interface { // 创建多种不同类型的产品
+// 创建多种不同类型的产品，每种产品有其标准定义（方法集），且提供具体的实现类
+type AbstractFactory interface {
 	CreateTelevision() ITelevision
 	CreateAirConditioner() IAirConditioner
 }
