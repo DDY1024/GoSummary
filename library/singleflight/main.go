@@ -151,7 +151,7 @@ func (g *Group) doCall(c *call, key string, fn func() (interface{}, error)) {
 		c.wg.Done()
 		g.mu.Lock()
 		defer g.mu.Unlock()
-		if !c.forgotten {
+		if !c.forgotten { // 在 doCall 过程中可能触发 Forget 操作，检查一下，避免重复删除
 			delete(g.m, key)
 		}
 
@@ -168,6 +168,7 @@ func (g *Group) doCall(c *call, key string, fn func() (interface{}, error)) {
 			// Already in the process of goexit, no need to call again
 		} else {
 			// Normal return
+			// 异步情况下，会向每个请求者的 channel 发送 result
 			for _, ch := range c.chans {
 				ch <- Result{c.val, c.err, c.dups > 0}
 			}

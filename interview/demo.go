@@ -23,6 +23,7 @@ func main() {
 		}
 	}()
 
+	// 缓冲 channel，直接写入，不阻塞
 	for i := 0; i < 4; i++ {
 		ch <- i
 	}
@@ -31,6 +32,7 @@ func main() {
 	<-quit
 	fmt.Println("End")
 
+	// GC 调优
 	ballast := make([]byte, 10*1024*1024)
 	runtime.KeepAlive(ballast)
 }

@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // template 模式
 // 1. 通过 interface 定义一组标准操作流程（一组方法）

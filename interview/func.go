@@ -7,6 +7,7 @@ import (
 	"strings"
 )
 
+// 可变参数列表相当于一个 slice
 func greet(names ...string) {
 	names[0] = "hello"
 	names[1] = "world"

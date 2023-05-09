@@ -7,6 +7,7 @@ import (
 type MyError struct {
 }
 
+// 实现 string 方法
 func (m *MyError) String() {
 
 }
