@@ -1,0 +1,2 @@
+time="2023-06-05T20:20:03+08:00" level=error msg="The group's number increased tremendously!" number=122 omg=true
+time="2023-06-05T20:20:03+08:00" level=error msg="Me too" common="this is a common field" other="I also should be logged always" xxx=xxx

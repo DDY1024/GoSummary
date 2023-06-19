@@ -1,0 +1,2 @@
+time="2023-06-05T20:20:03+08:00" level=info msg="A group of walrus emerges from the ocean" animal=walrus size=10
+time="2023-06-05T20:20:03+08:00" level=info msg="I'll be logged with common and other field" common="this is a common field" other="I also should be logged always" xxx=xxx
