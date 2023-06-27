@@ -23,12 +23,14 @@ func GetInstance() *Singleton {
 // "懒汉式" 不适应场景: 对第一次创建操作比较耗时的场景，懒创建会导致这次处理耗时非常大，在一些场景下是不能接受的
 var (
 	lazySingleton *Singleton
-	once          sync.Once
+	once          = &sync.Once{}
 )
 
 func GetLazySingleton() *Singleton {
-	once.Do(func() {
-		lazySingleton = &Singleton{}
-	})
+	if lazySingleton == nil { // double-check
+		once.Do(func() {
+			lazySingleton = &Singleton{}
+		})
+	}
 	return lazySingleton
 }

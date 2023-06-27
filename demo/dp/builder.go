@@ -1,7 +1,8 @@
 package main
 
-// 应用场景: 公共库初始化构建对象，解决入参比较多的问题
-// option 模式：必须参数显示传入，可选参数 option 方式传入
+// 建造者模式
+// 1. 必填参数显示传入
+// 2. 可选参数通过方法进行传入
 
 type People struct {
 	Age    int

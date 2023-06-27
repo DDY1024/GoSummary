@@ -31,7 +31,7 @@ func (l *Lfu) evict(c *Cache) {
 
 type Cache struct {
 	storage      map[string]string
-	evictionAlgo EvictionAlgo // cache key 淘汰算法
+	evictionAlgo EvictionAlgo // 驱逐策略
 	capacity     int
 	maxCapacity  int
 }
@@ -87,5 +87,3 @@ func main() {
 	cache.add("e", "5")
 
 }
-
-// 作为一个选项参数提供给 cache
