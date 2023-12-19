@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 // 1. const 块内声明的变量模式具有传递性
 // 2. iota 在一个 const 块内从 0 开始递增，不同 const 块内均从 0 开始递增
 
@@ -34,7 +32,3 @@ const (
 	p     // iota = 8, p = 0
 	q     // iota = 9, q = 0
 )
-
-func main() {
-	fmt.Println(xxx) // 5
-}
